@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>netracker.com</groupId>
     <artifactId>ne-tracker</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
@@ -116,11 +116,6 @@
             <version>5.3.4</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.orbit.joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.9.4.wso2v1</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.ws.commons.axiom</groupId>
             <artifactId>axiom-api</artifactId>
             <version>1.2.12</version>
@@ -136,11 +131,6 @@
             <version>3.2.2</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.user.api</artifactId>
-            <version>4.4.17</version>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.0.1</version>
@@ -152,36 +142,26 @@
         <finalName>ne-tracker</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <url>http://localhost:8080/manager/text</url>
-                    <server>tomcatserver</server>
-                    <username>admin</username>
-                    <password>admin</password>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <attachClasses>true</attachClasses>
-                    <webXml>src/webapp/WEB-INF/web.xml</webXml>
-                    <webResources>
-                        <resource>
-                            <directory>src/webapp</directory>
-                            <filtering>true</filtering>
-                        </resource>
-                    </webResources>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-war-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <webResources>
+                        <resource>
+                            <directory>${project.basedir}/etc/resources/</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <includes>
+                                <include>wso2carbon.jks</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
             </plugin>
         </plugins>
