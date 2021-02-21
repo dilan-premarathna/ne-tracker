@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="NE Tracker - Login">
+    <meta name="description" content="NE-Tracker - Login">
 
     <title>Pickup-Dispatch Login</title>
 
@@ -33,7 +33,7 @@
             <div class="col-sm-9 col-md-4 col-lg-4 mx-auto login-sec">
                 <div class="app-icon d-block mx-auto">
                     <!--<i class="fas fa-taxi fa-4x"></i>-->
-                    <img src="img/dispatch.jpg" class="login-img"/>
+                    <img src="img/dispatch.png" class="login-img"/>
                 </div>
                 <div class="app-name text-center">NE Tracker</div>
                 <form class="app-login-form" role="form" action="samlsso" method="post"  autocomplete="off">
