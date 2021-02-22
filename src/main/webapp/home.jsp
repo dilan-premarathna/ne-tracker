@@ -44,7 +44,7 @@
             <div class="site-header-inner">
                 <div class="brand header-brand">
                     <h1 class="m-0">
-                            <a href="file:///home/janaka/Downloads/MSC/ACA/CLOUD/ne-tracker/src/main/webapp/events.html" class="hbtn hb-fill-on">Ongoing natural disasters</a>
+                            <a href="events.html" class="hbtn hb-fill-on">Ongoing natural disasters</a>
                             <a href="#" class="hbtn hb-fill-on">Near Earth Objects</a>
                             <a href="#" class="hbtn hb-fill-on">Space weather forecasters</a>
 
