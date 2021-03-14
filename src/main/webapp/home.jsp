@@ -38,21 +38,30 @@
     </header>
 </div>
 
-<div class="body-wrap">
-    <header class="site-header">
-        <div class="container">
-            <div class="site-header-inner">
-                <div class="brand header-brand">
-                    <h1 class="m-0">
-                            <a href="events.html" class="hbtn hb-fill-on">Ongoing natural disasters</a>
-                            <a href="#" class="hbtn hb-fill-on">Near Earth Objects</a>
-                            <a href="#" class="hbtn hb-fill-on">Space weather forecasters</a>
+<style>
+.button {
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
 
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </header>
+.button1 {background-color: #1bc2a2; border-radius: 12px;} /* Green */
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+<div class="body-wrap">
+       <h1 class="m-0">
+            <input type=button class='button button1' onClick="location.href='events.html'" value='Ongoing natural disasters'>
+            <input type=button class='button button1' onClick="location.href='events.html'" value='Near Earth Objects'>
+            <input type=button class='button button1' onClick="location.href='events.html'" value='Space weather forecasters'>
+       </h1>
 </div>
 
 </body>
