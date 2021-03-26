@@ -47,13 +47,11 @@
                             <a href="events.html" class="hbtn hb-fill-on">Ongoing natural disasters</a>
                             <a href="#" class="hbtn hb-fill-on">Near Earth Objects</a>
                             <a href="#" class="hbtn hb-fill-on">Space weather forecasters</a>
-
                     </h1>
                 </div>
             </div>
         </div>
     </header>
 </div>
-
 </body>
 </html>
