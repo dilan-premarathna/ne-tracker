@@ -57,8 +57,8 @@
 <div class="body-wrap">
        <h1 class="m-0">
             <input type=button class='button button1' onClick="location.href='events.html'" value='Ongoing natural disasters'>
-            <input type=button class='button button1' onClick="location.href='events.html'" value='Near Earth Objects'>
-            <input type=button class='button button1' onClick="location.href='events.html'" value='Space weather forecasters'>
+            <input type=button class='button button1' onClick="location.href='objects.html'" value='Near Earth Objects'>
+            <input type=button class='button button1' onClick="location.href='forecasters.html'" value='Space weather forecasters'>
        </h1>
 </div>
 </body>
