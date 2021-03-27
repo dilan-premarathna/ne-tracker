@@ -3,47 +3,82 @@
 
     // First, show the list of events
     $( document ).ready(function() {
+        loadEvents('severeStorms');
+        loadEvents('wildfires');
+        loadEvents('volcanoes');
+    });
+
+    function loadEvents(eventID){
+
+        $( "#"+eventID+"EventTitle" ).html('<div class="loader"></div>');
+
         $.getJSON( server + "/events", {
             status: "open",
             limit: 20
         })
-            .done(function( data ) {
-                $.each( data.events, function( key, event ) {
-                    console.log(event);
-                    if(event["categories"][0]["id"]=="severeStorms"){
-                        $( "#eventList" ).append(
-                            "<dt class='event'>" +
-                            "<a href='javascript:void()' onclick='showLayers(\"" + event.id+ "\");'>" +
-                            event.title + "</a></dt>"
+        .done(function( data ) {
+            let count = 0;
+            $( "#"+eventID+"EventTitle" ).html('');
+
+            $.each( data.events, function( key, event ) {
+                console.log(event["categories"][0]["id"]);
+                if(event["categories"][0]["id"]==eventID){
+                    count++;
+                    $( "#"+eventID+"EventList" ).append(
+                        "<dt class='event'>" +
+                        "<a class='show-layers' href='#' data-container='"+eventID+"' data-event='" + event.id+ "'>" +
+                        event.title + "</a></dt>"
+                    );
+                    if (event.description != null &&event.description.length) {
+                        $( "#"+eventID+"EventList" ).append(
+                            "<dd>" + event.description + "</dd>"
                         );
-                        if (event.description != null &&event.description.length) {
-                            $( "#eventList" ).append(
-                                "<dd>" + event.description + "</dd>"
-                            );
-                        }
                     }
-                });
+                }    
+                
             });
-    });
+            if (count == 0) {
+                if(eventID == 'severeStorms'){
+                    $( "#"+eventID+"EventList" ).html("No Ongoing Severe Storms!!");
+                    return;
+                }
+                $( "#"+eventID+"EventList" ).html("No Ongoing "+eventID+"!!");
+            }   
+        });
+    }
 
     // Show the available layers for the event category
-    function showLayers(eventId) {
-        // hide the events list
-        $( "#eventSelect" ).hide();
-        $( "#layerSelect" ).show();
+    $(document).on('click','.show-layers', function(e){
 
+        e.preventDefault();
+
+        let eventId = $(this).attr('data-event');
+        let eventContainerID = $(this).attr('data-container');
+
+        $( "#"+eventContainerID+"EventTitle" ).html('<div class="loader"></div>');
+       
+        // hide the events list
+        $( "#"+eventContainerID+"EventSelect" ).hide();
+        $( "#"+eventContainerID+"LayerSelect" ).show();
+
+        // reset elements
+        $( "#"+eventContainerID+"LayerList" ).empty();
+       
+
+        
         // fetch the single event feed
         $.getJSON( server + "/events/" + eventId )
             .done(function( event ) {
+                
                 // Get the date and first location of the event.
                 // Events can have multiple locations but we are simplifying here.
                 var location = event.geometry[0];
 
-                $( "#eventTitle" ).append(": "+event.title+", "+location.date.substring(0,10));
+                $( "#"+eventContainerID+"EventTitle" ).html(": "+event.title+", "+location.date.substring(0,10));
 
                 // Show list of categories and children layers
                 $.each( event.categories, function( key, category ) {
-                    $( "#layerList" ).append(
+                    $( "#"+eventContainerID+"LayerList" ).append(
                         "<dt>"+category.title+"</dt> "
                     );
 
@@ -52,11 +87,12 @@
                     $.getJSON( server + "/layers/" + category.id )
                         .done(function( data ) {
                             var layers = data['categories'][0]['layers'];
+                            $( "#"+eventContainerID+"LayerList" ).append('<a href="#" class="load-events" data-event="'+eventContainerID+'">Go Back</a>');
                             $.each( layers, function( key, layer ) {
                                 if (layer.serviceTypeId == "WMTS_1_0_0") {
-                                    $( "#layerList" ).append(
+                                    $( "#"+eventContainerID+"LayerList" ).append(
                                         "<dd>" +
-                                        "<a href='javascript:void()' onclick='showMap(\"" + encodeURIComponent(JSON.stringify(layer)) + "\", \"" + encodeURIComponent(JSON.stringify(location)) + "\");'>" +
+                                        "<a href='#' class='showMap' data-container='"+eventContainerID+"' data-encodedLayer='" + encodeURIComponent(JSON.stringify(layer)) + "' data-encodedLocation='" + encodeURIComponent(JSON.stringify(location)) + "' >" +
                                         layer.name+"</a></dd> "
                                     );
                                 }
@@ -64,9 +100,31 @@
                         });
                 });
             });
-    }
 
-    function showMap(encodedLayer, encodedLocation) {
+    })
+
+    // Back function
+    $(document).on('click','.load-events', function(e){
+        e.preventDefault();
+        
+        eventContainerID = $(this).attr('data-event');
+        
+        $( "#"+eventContainerID+"EventSelect" ).show();
+        $( "#"+eventContainerID+"LayerSelect" ).hide();
+        $( "#"+eventContainerID+"Map" ).empty();
+
+    });
+
+
+    //show Map
+    $(document).on('click','.showMap', function(e){
+
+        e.preventDefault();
+        
+        let encodedLayer = $(this).attr('data-encodedLayer');
+        let encodedLocation = $(this).attr('data-encodedLocation');
+        let eventContainerID = $(this).attr('data-container');
+
         var layer = JSON.parse(decodeURIComponent(encodedLayer));
         var location = JSON.parse(decodeURIComponent(encodedLocation));
 
@@ -77,8 +135,9 @@
 
         displayMap(layer.serviceUrl, layer.name,
             center, mapTime,
-            layer.parameters[0].FORMAT, layer.parameters[0].TILEMATRIXSET);
-    }
+            layer.parameters[0].FORMAT, layer.parameters[0].TILEMATRIXSET,eventContainerID);
+    })
+
 
     function getCenter(geojson) {
         if (geojson.type == "Point") {
@@ -126,9 +185,9 @@
         }
     }
 
-    function displayMap(serviceUrl, layerName, center, dateStr, format, matrixSet) {
+    function displayMap(serviceUrl, layerName, center, dateStr, format, matrixSet,eventContainerID) {
         // call empty() to make sure another map doesn't already exist there
-        $( "#map" ).empty();
+        $( "#"+eventContainerID+"Map" ).empty();
 
         var map = new ol.Map({
             view: new ol.View({
@@ -139,7 +198,7 @@
                 zoom: 3,
                 maxZoom: 8
             }),
-            target: "map",
+            target: eventContainerID+"Map",
             renderer: ["canvas", "dom"]
         });
 
@@ -177,4 +236,13 @@
 
         map.addLayer(layer);
     }
+
+    $(document).on('click','.tabb-tab label', function(e){
+         
+        let eventContainerID = $(this).next().find('.selections').attr('id');
+        $( "#"+eventContainerID+"EventSelect" ).show();
+        $( "#"+eventContainerID+"LayerSelect" ).hide();
+        $( "#"+eventContainerID+"Map" ).empty();
+        $( "#"+eventContainerID+"EventTitle" ).empty();
+    })
 
