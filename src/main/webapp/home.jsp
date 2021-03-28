@@ -35,6 +35,7 @@
         try {
             ReadOnlyJWTClaimsSet claimsSet = SignedJWT.parse(idToken).getJWTClaimsSet();
             name = claimsSet.getStringClaim("cognito:username");
+            currentSession.setAttribute("username", name);
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error when getting id_token details.", e);
         }
@@ -133,9 +134,9 @@
   
 <div class="body-wrap">
        <h1 class="m-0">
-            <input type=button class='button button1' onClick="location.href='events.html'" value='Ongoing Natural Disasters'>
-            <input type=button class='button button1' onClick="location.href='objects.html'" value='Near Earth Objects'>
-            <input type=button class='button button1' onClick="location.href='forecasters.html'" value='Space Weather Forecasters'>
+            <input type=button class='button button1' onClick="location.href='events.jsp'" value='Ongoing Natural Disasters'>
+            <input type=button class='button button1' onClick="location.href='objects.jsp'" value='Near Earth Objects'>
+            <input type=button class='button button1' onClick="location.href='forecasters.jsp'" value='Space Weather Forecasters'>
        </h1>
 </div>
 </body>
