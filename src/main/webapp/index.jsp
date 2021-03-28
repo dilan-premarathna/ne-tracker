@@ -20,8 +20,13 @@
 </head>
 
 <%
-    if (request.getSession(false) != null) {
-        request.getSession(false).invalidate();
+    final HttpSession currentSession =  request.getSession(false);
+    if (currentSession != null
+            && currentSession.getAttribute("authenticated") != null
+                &&  (boolean)currentSession.getAttribute("authenticated")) {
+        // Logged in session. Direct to Home
+        response.sendRedirect("home.jsp");
+        return;
     }
 %>
 
@@ -36,7 +41,7 @@
                     <img src="img/dispatch.png" class="login-img"/>
                 </div>
                 <div class="app-name text-center">NE Tracker</div>
-                <form class="app-login-form" role="form" action="samlsso" method="post"  autocomplete="off">
+                <form class="app-login-form" role="form" action="oauth2-authorize-user.jsp?reset=true" method="post"  autocomplete="off">
                     <input type="submit" id="btn-login" class="btn btn-login" value="LOGIN">
                 </form>
             </div>
