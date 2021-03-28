@@ -1,3 +1,46 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.logging.Level"%>
+<%@page import="com.nimbusds.jwt.SignedJWT"%>
+<%@page import="org.netracker.identity.oauth2.OAuth2Constants"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="java.util.Properties"%>
+<%@page import="org.netracker.identity.oauth2.ContextEventListener"%>
+<%@page import="org.netracker.identity.oauth2.CommonUtils"%>
+<%@page import="com.nimbusds.jwt.ReadOnlyJWTClaimsSet"%>
+<%@page import="java.util.logging.Logger"%>
+
+<%
+    final Properties properties = ContextEventListener.getProperties();
+    final Logger logger = Logger.getLogger(getClass().getName());
+    final HttpSession currentSession =  request.getSession(false);
+
+    if (currentSession == null || currentSession.getAttribute("authenticated") == null) {
+        // A direct access to home. Must redirect to index
+        response.sendRedirect("index.jsp");
+        return;
+    }
+
+    final JSONObject requestObject = (JSONObject) currentSession.getAttribute("requestObject");
+    final JSONObject responseObject = (JSONObject) currentSession.getAttribute("responseObject");
+
+    final String idToken = (String) currentSession.getAttribute("idToken");
+    String name = "User";
+
+    Map<String, Object> customClaimValueMap = new HashMap<>();
+    Map<String, String> oidcClaimDisplayValueMap = new HashMap();
+
+    if (idToken != null) {
+        try {
+            ReadOnlyJWTClaimsSet claimsSet = SignedJWT.parse(idToken).getJWTClaimsSet();
+            name = claimsSet.getStringClaim("cognito:username");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error when getting id_token details.", e);
+        }
+    }
+%>
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +57,7 @@
 <body>
 <header>
     <ul class="main-navigation">
-        <li><a href="#">Hi User</a>
+        <li><a href="#">Hi <%=name%></a>
             <ul>
                 <li><a href="#">Log out</a>
                 </li>
