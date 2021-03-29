@@ -31,7 +31,7 @@
 				<a href="#">Hi <%=name%></a>
 				<ul>
 					<li>
-						<a href="#">Log out</a>
+						<a href="/ne-tracker/logout">Log out</a>
 					</li>
 				</ul>
 			</li>

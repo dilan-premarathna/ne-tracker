@@ -14,7 +14,7 @@ public final class OAuth2Constants {
     public static final String CALL_BACK_URL = "callBackUrl";
     public static final String OAUTH2_GRANT_TYPE = "grantType";
     public static final String OAUTH2_AUTHZ_ENDPOINT = "authorizeEndpoint";
-    public static final String OIDC_LOGOUT_ENDPOINT = "logoutEndpoint";
+    public static final String OIDC_LOGOUT_ENDPOINT = "OIDC_logout_endpoint";
     public static final String NAME = "name";
 
     // application specific session attributes

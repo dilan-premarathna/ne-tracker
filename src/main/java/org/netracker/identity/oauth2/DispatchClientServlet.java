@@ -41,7 +41,7 @@ public class DispatchClientServlet extends HttpServlet {
 
         // Validate callback properties
         if (request.getParameterMap().isEmpty()) {
-            CommonUtils.logout(request, response);
+            CommonUtils.clearSession(request, response);
             response.sendRedirect("index.jsp");
             return;
         }
@@ -50,7 +50,7 @@ public class DispatchClientServlet extends HttpServlet {
 
         if (StringUtils.isNotBlank(error)) {
             // Error response from IDP
-            CommonUtils.logout(request, response);
+            CommonUtils.clearSession(request, response);
             response.sendRedirect("index.jsp");
             return;
         }

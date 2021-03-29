@@ -13,14 +13,14 @@
     String authzGrantType = properties.getProperty("authzGrantType");
     String scope = properties.getProperty("scope");
     String callBackUrl = properties.getProperty("callBackUrl");
-    String OIDC_LOGOUT_ENDPOINT = properties.getProperty("OIDC_LOGOUT_ENDPOINT");
+    String OIDC_logout_endpoint = properties.getProperty("OIDC_logout_endpoint");
 
     session.setAttribute(OAuth2Constants.OAUTH2_GRANT_TYPE, authzGrantType);
     session.setAttribute(OAuth2Constants.CONSUMER_KEY, consumerKey);
     session.setAttribute(OAuth2Constants.SCOPE, scope);
     session.setAttribute(OAuth2Constants.CALL_BACK_URL, callBackUrl);
     session.setAttribute(OAuth2Constants.OAUTH2_AUTHZ_ENDPOINT, authzEndpoint);
-    session.setAttribute(OAuth2Constants.OIDC_LOGOUT_ENDPOINT, OIDC_LOGOUT_ENDPOINT);
+    session.setAttribute(OAuth2Constants.OIDC_LOGOUT_ENDPOINT, OIDC_logout_endpoint);
 
     OAuthClientRequest.AuthenticationRequestBuilder oAuthAuthenticationRequestBuilder =
             new OAuthClientRequest.AuthenticationRequestBuilder(authzEndpoint);

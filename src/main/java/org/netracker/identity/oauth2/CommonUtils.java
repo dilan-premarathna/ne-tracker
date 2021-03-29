@@ -48,7 +48,7 @@ public class CommonUtils {
 
     }
 
-    public static boolean logout(final HttpServletRequest request, final HttpServletResponse response) {
+    public static boolean clearSession(final HttpServletRequest request, final HttpServletResponse response) {
         // Invalidate session
         final HttpSession session = request.getSession(false);
         if (session != null) {
