@@ -56,6 +56,5 @@
 <!-- Bootstrap Material Design JavaScript -->
 <script src="libs/bootstrap-material-design_4.0.0/js/bootstrap-material-design.min.js"></script>
 
-
 </body>
 </html>

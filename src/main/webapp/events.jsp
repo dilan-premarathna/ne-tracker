@@ -1,3 +1,13 @@
+<%
+    final HttpSession currentSession =  request.getSession(false);
+    if (currentSession == null || currentSession.getAttribute("authenticated") == null) {
+        // A direct access. Must redirect to index
+        response.sendRedirect("index.jsp");
+        return;
+    }
+    String name = (String) currentSession.getAttribute("username");
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,10 +25,10 @@
 	<header>
 		<ul class="main-navigation">
 			<li>
-				<a href="home.html">Main</a>
+				<a href="home.jsp">Main</a>
 			</li>
 			<li>
-				<a href="#">Hi User</a>
+				<a href="#">Hi <%=name%></a>
 				<ul>
 					<li>
 						<a href="#">Log out</a>
@@ -75,5 +85,4 @@
 		</div>
 <script src="js/script.js"></script>
 </body>
-
 </html>
