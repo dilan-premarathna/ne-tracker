@@ -18,6 +18,17 @@
         <url-pattern>/oauth2client</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>org.netracker.identity.oauth2.IdpLogout</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
     <listener>
         <listener-class>org.netracker.identity.oauth2.ContextEventListener</listener-class>
     </listener>
