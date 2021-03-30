@@ -65,6 +65,7 @@ public class DispatchClientServlet extends HttpServlet {
             response.sendRedirect("home.jsp");
         } catch (AppServerException | OAuthSystemException | OAuthProblemException e) {
             LOGGER.log(Level.SEVERE, "Something went wrong", e);
+            CommonUtils.clearSession(request, response);
             response.sendRedirect("index.jsp");
         }
     }

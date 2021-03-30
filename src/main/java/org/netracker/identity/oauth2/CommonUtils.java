@@ -1,6 +1,11 @@
 
 package org.netracker.identity.oauth2;
 
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.jwk.source.*;
+import com.nimbusds.jose.proc.*;
+import com.nimbusds.jwt.*;
+import com.nimbusds.jwt.proc.*;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -18,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.*;
 
 public class CommonUtils {
@@ -72,8 +79,8 @@ public class CommonUtils {
         final Optional<Cookie> appIdCookie = getAppIdCookie(request);
         final HttpSession session = request.getSession(false);
         final Properties properties = ContextEventListener.getProperties();
-
         final TokenData storedTokenData;
+        JWTClaimsSet claimSet;
 
         if (appIdCookie.isPresent()) {
             storedTokenData = TOKEN_STORE.get(appIdCookie.get().getValue());
@@ -113,6 +120,18 @@ public class CommonUtils {
             String idToken = oAuthResponse.getParam("id_token");
             if (idToken != null) {
                 session.setAttribute("idToken", idToken);
+                try {
+                    claimSet = verifyAndProcessIdToken(idToken, properties);
+                    if (claimSet.getClaim("identities") != null) {
+                        //this is facebook username claim
+                        session.setAttribute("username", claimSet.getStringClaim("given_name"));
+                    } else {
+                        //this is cognito user pool claim
+                        session.setAttribute("username", claimSet.getStringClaim("cognito:username"));
+                    }
+                } catch (Exception e) {
+                    throw new OAuthSystemException("Error occurred while processing the idToken",e);
+                }
             }
             session.setAttribute("authenticated", true);
             TokenData tokenData = new TokenData();
@@ -168,5 +187,20 @@ public class CommonUtils {
         } catch (IOException e) {
             throw new ClientAppException("Error while creating connection to: " + url, e);
         }
+    }
+
+    private static JWTClaimsSet verifyAndProcessIdToken(String idToken, Properties properties) throws
+            MalformedURLException, ParseException, JOSEException, BadJOSEException {
+
+        ConfigurableJWTProcessor<SecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
+        JWKSource<SecurityContext> keySource = new RemoteJWKSet<>(new URL(properties.getProperty("jwksEndpoint")));
+        JWSAlgorithm expectedJWSAlg = JWSAlgorithm.RS256;
+        JWSKeySelector<SecurityContext> keySelector =
+                new JWSVerificationKeySelector<>(expectedJWSAlg, keySource);
+        jwtProcessor.setJWSKeySelector(keySelector);
+        jwtProcessor.setJWTClaimsSetVerifier(new DefaultJWTClaimsVerifier(
+                new JWTClaimsSet.Builder().issuer(properties.getProperty("issuer")).build(),
+                new HashSet<>(Arrays.asList("sub"))));
+        return jwtProcessor.process(idToken, null);
     }
 }
