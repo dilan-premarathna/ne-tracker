@@ -1,5 +1,5 @@
 
-    var server = "https://cors-anywhere.herokuapp.com/https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/";
+    var server = "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/";
 
 
     $(document).on('submit','#searchForm', function(e){
