@@ -13,7 +13,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- OpenLayers -->
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js" type="text/javascript"></script>
