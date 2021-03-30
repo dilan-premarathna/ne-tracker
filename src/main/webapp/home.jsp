@@ -1,14 +1,8 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
 <%@page import="java.util.logging.Level"%>
-<%@page import="com.nimbusds.jwt.SignedJWT"%>
 <%@page import="org.netracker.identity.oauth2.OAuth2Constants"%>
-<%@page import="org.json.JSONObject"%>
 <%@page import="java.util.Properties"%>
 <%@page import="org.netracker.identity.oauth2.ContextEventListener"%>
 <%@page import="org.netracker.identity.oauth2.CommonUtils"%>
-<%@page import="com.nimbusds.jwt.ReadOnlyJWTClaimsSet"%>
 <%@page import="java.util.logging.Logger"%>
 
 <%
@@ -21,25 +15,7 @@
         response.sendRedirect("index.jsp");
         return;
     }
-
-    final JSONObject requestObject = (JSONObject) currentSession.getAttribute("requestObject");
-    final JSONObject responseObject = (JSONObject) currentSession.getAttribute("responseObject");
-
-    final String idToken = (String) currentSession.getAttribute("idToken");
-    String name = "User";
-
-    Map<String, Object> customClaimValueMap = new HashMap<>();
-    Map<String, String> oidcClaimDisplayValueMap = new HashMap();
-
-    if (idToken != null) {
-        try {
-            ReadOnlyJWTClaimsSet claimsSet = SignedJWT.parse(idToken).getJWTClaimsSet();
-            name = claimsSet.getStringClaim("cognito:username");
-            currentSession.setAttribute("username", name);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error when getting id_token details.", e);
-        }
-    }
+    String name = (String) currentSession.getAttribute("username");
 %>
 
 <?xml version="1.0" encoding="UTF-8"?>
