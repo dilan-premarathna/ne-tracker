@@ -43,7 +43,7 @@
 			<div class="tabb-tab">
 				<input type="radio" id="tab-1" name="tabb-tabs" checked>
 				<label for="tab-1">Weather Activity</label>
-				<div class="tabb-content">
+				<div class="tabb-content" style="position: relative;top: 0;min-height: 800px;">
 					<div class="selection-wrapper" style="margin-bottom:20px" >
 						<form id="searchForm" method="POST">
 							<table>
