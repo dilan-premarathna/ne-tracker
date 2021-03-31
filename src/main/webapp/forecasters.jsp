@@ -13,7 +13,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- OpenLayers -->
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js" type="text/javascript"></script>
@@ -44,7 +44,7 @@
 			<div class="tabb-tab">
 				<input type="radio" id="tab-1" name="tabb-tabs" checked>
 				<label for="tab-1">Weather Activity</label>
-				<div class="tabb-content">
+				<div class="tabb-content" style="position: relative;top: 0;min-height: 800px;">
 					<div class="selection-wrapper" style="margin-bottom:20px" >
 						<form id="searchForm" method="POST">
 							<table>

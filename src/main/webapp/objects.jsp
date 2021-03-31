@@ -13,7 +13,7 @@
 
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- OpenLayers -->
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.2.1/build/ol.js" type="text/javascript"></script>
@@ -39,47 +39,30 @@
 		</ul>
 	</header>
 	<div class="container">
-		<h1>Near Earth Objects</h1>
+		<h1 class="text">Near Earth Objects</h1>
 		<div class="tabs">
 			<div class="tabb-tab">
 				<input type="radio" id="tab-1" name="tabb-tabs" checked>
-				<label for="tab-1">Tropical Storm</label>
+				<label for="tab-1"> Near earth Asteroid object information</label>
 				<div class="tabb-content">
+					<form >
+
+						<input type="Odate" id="start" name="date" value="2021-03-08">
+						<input type="submit" value="Submit">
+					</form>
 					<div class="selection-wrapper" >
 						<div id="selections" class="selections">
-						    <h2>Event Selection <span id="eventTitle"></span></h2>
+						    <h2>Object List <span id="eventTitle"></span></h2>
 						    <div id="eventSelect"><dl id="eventList"></dl></div>
 						    <div id="layerSelect"><dl id="layerList"></dl></div>
+							<div id="map" class="map">
+								<div id="tabledata" class="tabledata"></div>
+							</div>
 						</div>
-						<div id="map" class="map"></div>
 					</div>
 				</div>
 			</div>
-			<div class="tabb-tab">
-				<input type="radio" id="tab-2" name="tabb-tabs">
-				<label for="tab-2">Cyclone</label>
-				<div class="tabb-content">
-					<img src="https://s3-us-west-2.amazonaws.com/courses-images-archive-read-only/wp-content/uploads/sites/567/2015/05/21153100/105516592.jpg" width="350" height="304" />
-					<p>ABCD</p>
-				</div>
-			</div>
-			<div class="tabb-tab">
-				<input type="radio" id="tab-3" name="tabb-tabs">
-				<label for="tab-3">Wildfire</label>
-				<div class="tabb-content">
-					<img src="https://static.scientificamerican.com/sciam/cache/file/38A06FAD-787A-4C6E-8EAF7961B4A15286_source.jpg?w=590&h=800&E88BF874-B829-4466-80F6C05B82F21F2D" width="350" height="304" />
-					<p>ABCD</p>
-				</div>
-			</div>
-			<div class="tabb-tab">
-				<input type="radio" id="tab-4" name="tabb-tabs">
-				<label for="tab-4">Volcano</label>
-				<div class="tabb-content">
-					<img src="https://api.timeforkids.com/wp-content/uploads/2018/08/Hero-Volcano.jpg?w=1024" width="350" height="304" />
-					<p>ABCD</p>
-				</div>
-			</div>
 		</div>
-<script src="js/script.js"></script>
+		<script src="js/get-object.js"></script>
 </body>
 </html>
