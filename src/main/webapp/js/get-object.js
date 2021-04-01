@@ -1,4 +1,4 @@
-var server = "https://api.nasa.gov";
+var server = "https://b26876kqee.execute-api.ap-south-1.amazonaws.com/prod";
 
 var date = "2021-03-08";
 

@@ -1,5 +1,5 @@
 
-    var server = "https://eonet.sci.gsfc.nasa.gov/api/v3";
+    var server = "https://c2bgsowb9c.execute-api.ap-south-1.amazonaws.com/prod";
 
     // First, show the list of events
     $( document ).ready(function() {
