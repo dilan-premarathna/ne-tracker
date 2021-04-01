@@ -1,5 +1,5 @@
 
-    var server = "https://api.nasa.gov/DONKI/";
+    var server = "https://23pfmc1uj6.execute-api.ap-south-1.amazonaws.com/prod/";
     var API_key = 'SxI5prqhAOSiBtqsrZdaN2sYM8uLa5iNJg2ydV7e';
 
 
